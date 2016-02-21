@@ -16,7 +16,7 @@ package edu.iedu.flashcard.dao.domain;
 //`status` VARCHAR(45) NULL,
 //`isverified` INT NOT NULL DEFAULT 0,
 
-public class RS_User {
+public class User {
 	
 	public final static int		STATUS_NOT_FOUNDED			= 1;
 	public final static int		STATUS_FOUNDED				= 2;

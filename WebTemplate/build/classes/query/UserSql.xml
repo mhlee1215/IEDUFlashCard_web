@@ -4,7 +4,7 @@
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="UserSql">
 
-	<resultMap id="User" class="com.respace.domain.RS_User">
+	<resultMap id="User" class="edu.iedu.flashcard.dao.domain.User">
 		<result column="ID" property="id" />
 		<result column="NAME" property="name" />
 		<result column="EMAIL" property="email" />
@@ -21,27 +21,27 @@
  	
  	<select id="readUserList" resultMap="User">
  		SELECT ID, NAME, EMAIL, TYPE, ISVERIFIED, ISDELETED, REGISTEREDDATE, DELETEDDATE, VERIFIEDDATE 
- 		FROM rs_user
+ 		FROM User
  		
  	</select>
  	
 	<select id="readUser" resultMap="User">
        SELECT ID, NAME, EMAIL, TYPE, ISVERIFIED, ISDELETED, REGISTEREDDATE, DELETEDDATE, VERIFIEDDATE 
-       FROM rs_user 
+       FROM User 
        WHERE EMAIL = #email# 
        <isNotEmpty property="password">
        and PASSWORD = #password#
        </isNotEmpty>
 	</select>
 
-	<insert id="createUser" parameterClass="com.respace.domain.RS_User">
+	<insert id="createUser" parameterClass="edu.iedu.flashcard.dao.domain.User">
 		 INSERT INTO
-		 rs_user (EMAIL, PASSWORD, TYPE)
+		 User (EMAIL, PASSWORD, TYPE)
 		 VALUES (#email#, #password#, #type#)
 	</insert>
 	
-	<update id="updateUser" parameterClass="com.respace.domain.RS_User">
-		 UPDATE rs_user SET
+	<update id="updateUser" parameterClass="edu.iedu.flashcard.dao.domain.User">
+		 UPDATE User SET
 		 ID = #id#
 		 <isNotEmpty property="password">
 		 ,PASSWORD = #password#

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.iedu.flashcard.dao.UserDao;
-import edu.iedu.flashcard.dao.domain.RS_User;
+import edu.iedu.flashcard.dao.domain.User;
 import edu.iedu.flashcard.dao.util.Crypto;
 
 
@@ -26,26 +26,26 @@ public class UserServiceImpl implements UserService {
 	
 	boolean isEncrypt = true;
 
-	public List<RS_User> findAll() {
+	public List<User> findAll() {
 		return userDao.findAll();
 	}
 
-	public int createUser(RS_User user) throws Exception {
+	public int createUser(User user) throws Exception {
 		
 		
 		//Encrypt
         if(isEncrypt)
         	 user.setPassword(Crypto.encrypt(user.getPassword()));       
-		RS_User paramUser = new RS_User();
+		User paramUser = new User();
 		paramUser.setEmail(user.getEmail());
-		RS_User foundUser = readUserData(paramUser);
+		User foundUser = readUserData(paramUser);
 		logger.debug("create User");
 		logger.debug("==[S]============================");
 		
 		if(foundUser != null){
 			logger.debug("User is already registered. Cancel Register.");
 			logger.debug("==[E]============================");
-			return RS_User.STATUS_ALREADY_REGISTEREDED;
+			return User.STATUS_ALREADY_REGISTEREDED;
 		}
 		else{
 			logger.debug("User doesn't find. Go Register.");
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
 			//Env.exeCmd(cmd+" "+Env.ENV_LOG_PATH+user.getInternalid());
 			System.out.println(resultStr);
 			logger.debug("==[E]============================");
-			return RS_User.STATUS_SUCCESS_REGISTER;
+			return User.STATUS_SUCCESS_REGISTER;
 		}
 		
 		
@@ -71,47 +71,47 @@ public class UserServiceImpl implements UserService {
 
 	
 
-	public int readUser(RS_User user) throws Exception {
+	public int readUser(User user) throws Exception {
 		
 		if(isEncrypt)
 		    user.setPassword(Crypto.encrypt(user.getPassword()));
         //
-		RS_User readed = userDao.readUser(user);
+		User readed = userDao.readUser(user);
 		
 		if(readed == null){
-			return RS_User.STATUS_NOT_FOUNDED;
+			return User.STATUS_NOT_FOUNDED;
 		}else{
-			return RS_User.STATUS_FOUNDED;
+			return User.STATUS_FOUNDED;
 		}
 	}
 	
-	public RS_User readUserData(RS_User user) throws Exception {
+	public User readUserData(User user) throws Exception {
 		return userDao.readUser(user);
 	}
 
-	public void updateUser(RS_User user) {
+	public void updateUser(User user) {
 		userDao.updateUser(user);
 	}
 
 	public int verifyUser(String email) {
 
-		RS_User paramUser = new RS_User();
+		User paramUser = new User();
 		paramUser.setEmail(email);
-		RS_User user = userDao.readUser(paramUser);
+		User user = userDao.readUser(paramUser);
 		if (user != null) {
 			if (user.getIsverified().equals("Y")) {
 				//alread verified.
-				return RS_User.STATUS_ALREADY_VERIFIED;
+				return User.STATUS_ALREADY_VERIFIED;
 			} else {
 				paramUser.setIsverified("Y");
-				paramUser.setStatus(RS_User.STATUS_VERIFIED);
+				paramUser.setStatus(User.STATUS_VERIFIED);
 				userDao.updateUser(paramUser);
 				// Activate successfully.
-				return RS_User.STATUS_SUCCESS_VERIFIED;
+				return User.STATUS_SUCCESS_VERIFIED;
 			}
 		}
 		// Activate fail.
-		return RS_User.STATUS_NOT_FOUNDED;
+		return User.STATUS_NOT_FOUNDED;
 	}
 
 	public int deleteUser(String id) {
@@ -119,20 +119,20 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public int deleteUser(String email, boolean isDeleteRow) {
-		RS_User paramUser = new RS_User();
+		User paramUser = new User();
 		paramUser.setEmail(email);
-		RS_User user = userDao.readUser(paramUser);
+		User user = userDao.readUser(paramUser);
 		if (user != null) {
 			if (user.getIsdeleted().equals("Y")) {
 				//alread deleted.
-				return RS_User.STATUS_ALREADY_DELETED;
+				return User.STATUS_ALREADY_DELETED;
 			} else {
 				userDao.deleteUser(paramUser);
-				return RS_User.STATUS_SUCCESS_DELETED;
+				return User.STATUS_SUCCESS_DELETED;
 			}
 		}
 		// Delete fail.
-		return RS_User.STATUS_DELTE_FAIL;
+		return User.STATUS_DELTE_FAIL;
 		
 	}
 

@@ -14,7 +14,7 @@
 </head>
 <body>
 <div id="wrapper">
-	HI
+	Hello World!
 </div>
 </body>
 </html>
