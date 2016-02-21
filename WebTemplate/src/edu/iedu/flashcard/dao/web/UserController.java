@@ -89,8 +89,6 @@ public class UserController {
 					user.setPassword(password);
 					userList.add(user);
 				}
-
-				
 			}
 			catch(SQLException e)
 			{

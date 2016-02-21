@@ -1,20 +1,13 @@
 <!DOCUENT html>
 <html>
 <head>
-<style>
-* {
-	padding : 0px;
-	margin : 0px;
-}
-
-#wrapper {	margin : 0 auto;
-	text-align : center;
-}
-</style>
 </head>
 <body>
 <div id="wrapper">
-	Hello World!
+	<h1>Hello World!</h1>
+	<br>
+	Parameters? ${myMessage} 
+	<br>
 </div>
 </body>
 </html>
