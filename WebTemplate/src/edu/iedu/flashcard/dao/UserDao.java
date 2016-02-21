@@ -1,8 +1,8 @@
-package com.respace.dao;
+package edu.iedu.flashcard.dao;
 
 import java.util.List;
 
-import com.respace.domain.RS_User;
+import edu.iedu.flashcard.dao.domain.RS_User;
 
 
 public interface UserDao {

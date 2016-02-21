@@ -1,4 +1,4 @@
-package com.respace.service;
+package edu.iedu.flashcard.dao.service;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.respace.dao.UserDao;
-import com.respace.domain.RS_User;
-import com.respace.util.Crypto;
+import edu.iedu.flashcard.dao.UserDao;
+import edu.iedu.flashcard.dao.domain.RS_User;
+import edu.iedu.flashcard.dao.util.Crypto;
 
 
 

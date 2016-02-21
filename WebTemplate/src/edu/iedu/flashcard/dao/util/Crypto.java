@@ -1,4 +1,4 @@
-package com.respace.util;
+package edu.iedu.flashcard.dao.util;
 
 public class Crypto {
 	/**

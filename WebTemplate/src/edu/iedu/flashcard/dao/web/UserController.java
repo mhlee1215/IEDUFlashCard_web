@@ -1,4 +1,4 @@
-package com.respace.web;
+package edu.iedu.flashcard.dao.web;
 
 import java.util.List;
 
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.respace.domain.RS_User;
-import com.respace.service.UserService;
+import edu.iedu.flashcard.dao.domain.RS_User;
+import edu.iedu.flashcard.dao.service.UserService;
 
 
 

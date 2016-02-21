@@ -1,11 +1,11 @@
-package com.respace.service;
+package edu.iedu.flashcard.dao.service;
 
 import java.net.MalformedURLException;
 import java.util.List;
 
 import org.apache.commons.mail.EmailException;
 
-import com.respace.domain.RS_User;
+import edu.iedu.flashcard.dao.domain.RS_User;
 
 
 

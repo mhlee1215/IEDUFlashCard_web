@@ -1,4 +1,4 @@
-package com.respace.domain;
+package edu.iedu.flashcard.dao.domain;
 
 /**
  * 
