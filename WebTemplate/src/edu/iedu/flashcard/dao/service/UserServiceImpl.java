@@ -50,26 +50,11 @@ public class UserServiceImpl implements UserService {
 		else{
 			logger.debug("User doesn't find. Go Register.");
 			userDao.createUser(user);
-			
-			//Make User Folser
-			String cmd = "mkdir";
-			String resultStr = "";
-			
-			//Make ID folder
-			//resultStr+=Env.exeCmd(cmd+" "+Env.ENV_DATA_PATH+user.getInternalid());
-			if(!resultStr.equals(""))resultStr+="<br>";
-		
-			//Make Log folder
-			//Env.exeCmd(cmd+" "+Env.ENV_LOG_PATH+user.getInternalid());
-			System.out.println(resultStr);
-			logger.debug("==[E]============================");
 			return User.STATUS_SUCCESS_REGISTER;
 		}
 		
 		
 	}
-
-	
 
 	public int readUser(User user) throws Exception {
 		
@@ -92,59 +77,13 @@ public class UserServiceImpl implements UserService {
 	public void updateUser(User user) {
 		userDao.updateUser(user);
 	}
-
-	public int verifyUser(String email) {
-
-		User paramUser = new User();
-		paramUser.setEmail(email);
-		User user = userDao.readUser(paramUser);
-		if (user != null) {
-			if (user.getIsverified().equals("Y")) {
-				//alread verified.
-				return User.STATUS_ALREADY_VERIFIED;
-			} else {
-				paramUser.setIsverified("Y");
-				paramUser.setStatus(User.STATUS_VERIFIED);
-				userDao.updateUser(paramUser);
-				// Activate successfully.
-				return User.STATUS_SUCCESS_VERIFIED;
-			}
-		}
-		// Activate fail.
-		return User.STATUS_NOT_FOUNDED;
-	}
-
-	public int deleteUser(String id) {
-		return deleteUser(id, false);
-	}
 	
-	public int deleteUser(String email, boolean isDeleteRow) {
+	public int deleteUser(String email) {
 		User paramUser = new User();
 		paramUser.setEmail(email);
-		User user = userDao.readUser(paramUser);
-		if (user != null) {
-			if (user.getIsdeleted().equals("Y")) {
-				//alread deleted.
-				return User.STATUS_ALREADY_DELETED;
-			} else {
-				userDao.deleteUser(paramUser);
-				return User.STATUS_SUCCESS_DELETED;
-			}
-		}
-		// Delete fail.
-		return User.STATUS_DELTE_FAIL;
+		userDao.deleteUser(paramUser);
+		
+		return User.STATUS_SUCCESS_DELETED;
 		
 	}
-
-	@Override
-	public int findPassword(String id) throws EmailException,
-			MalformedURLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-
-	
-
 }

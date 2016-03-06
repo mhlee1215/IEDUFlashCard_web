@@ -1,5 +1,7 @@
 package edu.iedu.flashcard.dao.web;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -22,6 +27,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import edu.iedu.flashcard.dao.domain.User;
 import edu.iedu.flashcard.dao.service.UserService;
+import edu.iedu.flashcard.dao.util.MyJsonUtil;
+
 
 
 
@@ -65,7 +72,7 @@ public class UserController {
 			try
 			{
 				// create a database connection
-				connection = DriverManager.getConnection("jdbc:mysql://54.201.57.109:3306/iedu_flashcard","root", "a12345!");
+				connection = DriverManager.getConnection("jdbc:mysql://54.191.113.175:3306/iedu_flashcard","root", "a12345!");
 				Statement statement = connection.createStatement();
 				statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
@@ -120,5 +127,39 @@ public class UserController {
 		model.addObject("userList",userList);
 		return model;
 	}
+	
+	@RequestMapping("/userListQuery.do")
+	public ResponseEntity<String>  userListQuery(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		List<User> users = userService.findAll();
+		System.out.println(users);
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=UTF-8");
+		return new ResponseEntity<String>(MyJsonUtil.toString(users, "users"), responseHeaders, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value="/addUser.do")
+    public @ResponseBody String addUser(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		
+		String name = ServletRequestUtils.getStringParameter(request, "name", "");
+		String email = ServletRequestUtils.getStringParameter(request, "email", "");
+		String password = ServletRequestUtils.getStringParameter(request, "password", "");
+		
+
+						
+		User user = new User();
+		user.setName(URLDecoder.decode(name, "UTF-8"));
+		user.setEmail(URLDecoder.decode(email, "UTF-8"));
+		user.setPassword(URLDecoder.decode(password, "UTF-8"));
+		
+		try {
+			userService.createUser(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return "fail-"+e.toString();
+		}
+		
+		return "success";
+    }
 
 }
