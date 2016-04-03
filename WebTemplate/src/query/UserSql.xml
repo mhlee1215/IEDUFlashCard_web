@@ -20,7 +20,13 @@
 	<select id="readUser" resultMap="User">
        SELECT ID, NAME, EMAIL 
        FROM user 
-       WHERE EMAIL = #email# 
+       WHERE 
+       <isNotEmpty property="name">
+       		NAME = #name#
+       </isNotEmpty>
+        <isNotEmpty property="email">
+       		EMAIL = #email#
+       </isNotEmpty>
        <isNotEmpty property="password">
        and PASSWORD = #password#
        </isNotEmpty>
