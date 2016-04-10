@@ -56,8 +56,8 @@ public class WordBookController {
 
 	
 	
-	@RequestMapping(value="/addWord.do")
-    public @ResponseBody String addWord(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+	@RequestMapping(value="/addWordBook.do")
+    public @ResponseBody String addWordBook(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		
 		String userId = ServletRequestUtils.getStringParameter(request, "userId", "");
 		String wordBookId = ServletRequestUtils.getStringParameter(request, "wordBookId", "");
