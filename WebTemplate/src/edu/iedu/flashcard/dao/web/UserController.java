@@ -144,8 +144,6 @@ public class UserController {
 		String name = ServletRequestUtils.getStringParameter(request, "name", "");
 		String email = ServletRequestUtils.getStringParameter(request, "email", "");
 		String password = ServletRequestUtils.getStringParameter(request, "password", "");
-		
-
 						
 		User user = new User();
 		user.setName(URLDecoder.decode(name, "UTF-8"));
@@ -158,8 +156,32 @@ public class UserController {
 			// TODO Auto-generated catch block
 			return "fail-"+e.toString();
 		}
-		
 		return "success";
+    }
+	
+	@RequestMapping(value="/appLogin.do")
+    public @ResponseBody String appLogin(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		
+		String name = ServletRequestUtils.getStringParameter(request, "name", "");
+		String email = ServletRequestUtils.getStringParameter(request, "email", "");
+		String password = ServletRequestUtils.getStringParameter(request, "password", "");
+						
+		User user = new User();
+		user.setName(URLDecoder.decode(name, "UTF-8"));
+		user.setEmail(URLDecoder.decode(email, "UTF-8"));
+		user.setPassword(URLDecoder.decode(password, "UTF-8"));
+		
+		try {
+			//userService.createUser(user);
+			int result = userService.readUser(user);
+			if(result == User.STATUS_FOUNDED)
+				return "success";
+			else
+				return "fail";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return "fail-"+e.toString();
+		}
     }
 
 }
