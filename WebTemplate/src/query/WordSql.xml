@@ -6,7 +6,7 @@
 
 	<resultMap id="Word" class="edu.iedu.flashcard.dao.domain.Word">
 		<result column="ID" property="id" />
-		<result column="WORD" property="word" />
+		<result column="NAME" property="name" />
 		<result column="MEANING" property="meaning" />
 		<!-- <result column="PASSWORD" property="password" /> -->
 	
@@ -17,14 +17,14 @@
 		<result column="NAME" property="name" />
  	</resultMap>
  	
- 	<resultMap id="Word2WordBook" class="edu.iedu.flashcard.dao.domain.Word2wordbook">
-		<result column="ID" property="id" />
-		<result column="WordID" property="Wordid" />
+ 	<resultMap id="Word2WordBook" class="edu.iedu.flashcard.dao.domain.User2WordBook">
+		<result column="USERID" property="userid" />
 		<result column="WORDBOOKID" property="wordbookid" />
  	</resultMap>
  	
+ 	
  	<select id="readWordList" resultMap="Word">
- 		SELECT ID, WORDBOOKID, WORD, MEANING 
+ 		SELECT ID, WORD, MEANING 
  		FROM Word
  		WHERE 
  			ID = ID
@@ -34,24 +34,25 @@
  	</select>
  	
 	<select id="readWord" resultMap="Word">
-       SELECT ID, NAME, EMAIL 
+       SELECT ID, NAME, WORDBOOKID, MEANING 
        FROM Word 
        WHERE 
+       		ID = ID
        <isNotEmpty property="name">
-       		NAME = #name#
+       		and NAME = #name#
        </isNotEmpty>
-        <isNotEmpty property="email">
-       		EMAIL = #email#
+        <isNotEmpty property="meaning">
+       		and MEANING = #meaning#
        </isNotEmpty>
-       <isNotEmpty property="password">
-       and PASSWORD = #password#
+       <isNotEmpty property="wordbookid">
+       		and WORDBOOKID = #wordbookid#
        </isNotEmpty>
 	</select>
 
 	<insert id="createWord" parameterClass="edu.iedu.flashcard.dao.domain.Word">
 		 INSERT INTO
-		 Word (NAME, EMAIL, PASSWORD)
-		 VALUES (#name#, #email#, #password#)
+		 Word (NAME, WORDBOOKID, MEANING)
+		 VALUES (#name#, #wordbookid#, #meaning#)
 	</insert>
 	
 	<insert id="createWordBook" parameterClass="edu.iedu.flashcard.dao.domain.WordBook">
