@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="WordBookSql">
+ 	
+ 	<resultMap id="WordBook" class="edu.iedu.flashcard.dao.domain.WordBook">
+		<result column="ID" property="id" />
+		<result column="NAME" property="name" />
+ 	</resultMap>
+ 	
+ 	<resultMap id="Word2WordBook" class="edu.iedu.flashcard.dao.domain.User2WordBook">
+		<result column="USERID" property="userid" />
+		<result column="WORDBOOKID" property="wordbookid" />
+ 	</resultMap>
+ 	
+ 	
+ 	<select id="readWordBookList" resultMap="WordBook">
+ 		SELECT ID, NAME 
+ 		FROM WordBook
+ 		WHERE 
+ 			ID = ID
+ 		<isNotEmpty property="id">
+ 			and ID = #id#
+ 		</isNotEmpty>
+ 		<isNotEmpty property="name">
+ 			and NAME like #name#
+ 		</isNotEmpty>
+ 	</select>
+ 	
+	<select id="readWordBook" resultMap="WordBook">
+       SELECT ID, NAME 
+ 		FROM WordBook
+ 		WHERE 
+ 			ID = ID
+ 		<isNotEmpty property="id">
+ 			and ID = #id#
+ 		</isNotEmpty>
+ 		<isNotEmpty property="name">
+ 			and NAME like #name#
+ 		</isNotEmpty>
+	</select>
+
+	<insert id="createWordBook" parameterClass="edu.iedu.flashcard.dao.domain.WordBook">
+		 INSERT INTO
+		 WordBook (ID, NAME)
+		 VALUES (#id#, #name#)
+	</insert>
+	
+	<update id="updateWordBook" parameterClass="edu.iedu.flashcard.dao.domain.WordBook">
+		 UPDATE Word SET
+		 ID = #id#
+		 <isNotEmpty property="name">
+		 ,NAME = #name#
+		 </isNotEmpty>
+		 WHERE ID = #id# 
+	</update>
+	
+	<update id="deleteWordBook" parameterClass="edu.iedu.flashcard.dao.domain.WordBook">
+		 DELETE WordBook
+		 WHERE ID = #id# 
+	</update>
+</sqlMap>
+
+
