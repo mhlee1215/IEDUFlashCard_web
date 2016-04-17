@@ -30,5 +30,7 @@
     </transactionManager>
   
   <sqlMap resource="query/UserSql.xml"/>
+  <sqlMap resource="query/WordSql.xml"/>
+  <sqlMap resource="query/WordBookSql.xml"/>
    
 </sqlMapConfig>
