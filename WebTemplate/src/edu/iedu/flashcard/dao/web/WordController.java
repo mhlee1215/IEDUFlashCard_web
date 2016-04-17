@@ -26,6 +26,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import edu.iedu.flashcard.dao.domain.User;
+import edu.iedu.flashcard.dao.domain.Word;
+import edu.iedu.flashcard.dao.domain.WordBook;
 import edu.iedu.flashcard.dao.service.UserService;
 import edu.iedu.flashcard.dao.service.WordService;
 import edu.iedu.flashcard.dao.util.MyJsonUtil;
@@ -59,8 +61,31 @@ public class WordController {
 		String name = ServletRequestUtils.getStringParameter(request, "word", "");
 		String email = ServletRequestUtils.getStringParameter(request, "meaning", "");
 					
-		
 		return "success";
+    }
+	
+	@RequestMapping(value="/readWordList.do")
+    public ResponseEntity<String> readWordList(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {	
+		int wordbookid = ServletRequestUtils.getIntParameter(request, "wordbookid", -1);
+					
+		Word word = new Word("", "");
+		word.setWordbookid(wordbookid);
+		
+		//wordBook.setId(userId);
+		
+		
+		List<Word> wordList = null;
+		
+		try {
+			wordList = wordService.readWordList(word);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=UTF-8");
+		return new ResponseEntity<String>(MyJsonUtil.toString(wordList, "wordbooks"), responseHeaders, HttpStatus.CREATED);
     }
 	
 }
