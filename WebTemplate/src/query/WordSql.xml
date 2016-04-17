@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="WordSql">
+
+	<resultMap id="Word" class="edu.iedu.flashcard.dao.domain.Word">
+		<result column="ID" property="id" />
+		<result column="WORD" property="word" />
+		<result column="MEANING" property="meaning" />
+		<!-- <result column="PASSWORD" property="password" /> -->
+	
+ 	</resultMap>
+ 	
+ 	<resultMap id="WordBook" class="edu.iedu.flashcard.dao.domain.WordBook">
+		<result column="ID" property="id" />
+		<result column="NAME" property="name" />
+ 	</resultMap>
+ 	
+ 	<resultMap id="Word2WordBook" class="edu.iedu.flashcard.dao.domain.Word2wordbook">
+		<result column="ID" property="id" />
+		<result column="WordID" property="Wordid" />
+		<result column="WORDBOOKID" property="wordbookid" />
+ 	</resultMap>
+ 	
+ 	<select id="readWordList" resultMap="Word">
+ 		SELECT ID, WORDBOOKID, WORD, MEANING 
+ 		FROM Word
+ 		WHERE 
+ 			ID = ID
+ 		<isNotEmpty property="wordbookid">
+ 			and WORDBOOKID = #wordbookid#
+ 		</isNotEmpty>
+ 	</select>
+ 	
+	<select id="readWord" resultMap="Word">
+       SELECT ID, NAME, EMAIL 
+       FROM Word 
+       WHERE 
+       <isNotEmpty property="name">
+       		NAME = #name#
+       </isNotEmpty>
+        <isNotEmpty property="email">
+       		EMAIL = #email#
+       </isNotEmpty>
+       <isNotEmpty property="password">
+       and PASSWORD = #password#
+       </isNotEmpty>
+	</select>
+
+	<insert id="createWord" parameterClass="edu.iedu.flashcard.dao.domain.Word">
+		 INSERT INTO
+		 Word (NAME, EMAIL, PASSWORD)
+		 VALUES (#name#, #email#, #password#)
+	</insert>
+	
+	<insert id="createWordBook" parameterClass="edu.iedu.flashcard.dao.domain.WordBook">
+		 INSERT INTO
+		 WordBook (ID, NAME)
+		 VALUES (#id#, #name#)
+	</insert>
+	
+	<update id="updateWord" parameterClass="edu.iedu.flashcard.dao.domain.Word">
+		 UPDATE Word SET
+		 ID = #id#
+		 <isNotEmpty property="password">
+		 ,PASSWORD = #password#
+		 </isNotEmpty>
+		 WHERE ID = #id# 
+	</update>
+</sqlMap>
+
+
