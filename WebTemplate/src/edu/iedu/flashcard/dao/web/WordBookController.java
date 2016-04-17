@@ -89,7 +89,33 @@ public class WordBookController {
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=UTF-8");
-		return new ResponseEntity<String>(MyJsonUtil.toString(wordBookList, "users"), responseHeaders, HttpStatus.CREATED);
+		return new ResponseEntity<String>(MyJsonUtil.toString(wordBookList, "wordbooks"), responseHeaders, HttpStatus.CREATED);
+    }
+	
+	@RequestMapping(value="/readWordBookList.do")
+    public ResponseEntity<String> readWordBookList(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {	
+		int userId = ServletRequestUtils.getIntParameter(request, "userid", -1);
+		int id = ServletRequestUtils.getIntParameter(request, "id", -1);
+		String name = ServletRequestUtils.getStringParameter(request, "name", "");
+					
+		WordBook wordBook = new WordBook("My List");
+		wordBook.setId(id);
+		wordBook.setName(name);
+		//wordBook.setId(userId);
+		
+		
+		List<WordBook> wordBookList = null;
+		
+		try {
+			wordBookList = wordBookService.readWordBookList(wordBook);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=UTF-8");
+		return new ResponseEntity<String>(MyJsonUtil.toString(wordBookList, "wordbooks"), responseHeaders, HttpStatus.CREATED);
     }
 
 }

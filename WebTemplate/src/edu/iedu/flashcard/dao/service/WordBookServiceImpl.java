@@ -29,6 +29,10 @@ public class WordBookServiceImpl implements WordBookService {
 	@Autowired
 	private WordDao		wordDao;
 	
+	@Autowired
+	private WordService		wordService;
+	
+	
 	boolean isEncrypt = true;
 
 	public List<WordBook> findAll() {
@@ -50,7 +54,7 @@ public class WordBookServiceImpl implements WordBookService {
 		
 		for(int i = 0 ; i < 10 ; i++){
 			WordBook book = new WordBook("wordBook_"+i);
-			book.setWordList(wordDao.findAll());
+			//book.setWordList(wordService.findAll());
 			wordBookList.add(book);
 		}
 		

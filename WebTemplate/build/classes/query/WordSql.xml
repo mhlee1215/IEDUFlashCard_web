@@ -9,20 +9,9 @@
 		<result column="NAME" property="name" />
 		<result column="MEANING" property="meaning" />
 		<!-- <result column="PASSWORD" property="password" /> -->
-	
  	</resultMap>
  	
- 	<resultMap id="WordBook" class="edu.iedu.flashcard.dao.domain.WordBook">
-		<result column="ID" property="id" />
-		<result column="NAME" property="name" />
- 	</resultMap>
- 	
- 	<resultMap id="Word2WordBook" class="edu.iedu.flashcard.dao.domain.User2WordBook">
-		<result column="USERID" property="userid" />
-		<result column="WORDBOOKID" property="wordbookid" />
- 	</resultMap>
- 	
- 	
+
  	<select id="readWordList" resultMap="Word">
  		SELECT ID, WORD, MEANING 
  		FROM Word
@@ -55,18 +44,17 @@
 		 VALUES (#name#, #wordbookid#, #meaning#)
 	</insert>
 	
-	<insert id="createWordBook" parameterClass="edu.iedu.flashcard.dao.domain.WordBook">
-		 INSERT INTO
-		 WordBook (ID, NAME)
-		 VALUES (#id#, #name#)
-	</insert>
-	
 	<update id="updateWord" parameterClass="edu.iedu.flashcard.dao.domain.Word">
 		 UPDATE Word SET
 		 ID = #id#
 		 <isNotEmpty property="password">
 		 ,PASSWORD = #password#
 		 </isNotEmpty>
+		 WHERE ID = #id# 
+	</update>
+	
+	<update id="deleteWord" parameterClass="edu.iedu.flashcard.dao.domain.Word">
+		 DELETE WORD 
 		 WHERE ID = #id# 
 	</update>
 </sqlMap>
