@@ -71,8 +71,6 @@ public class WordController {
 		Word word = new Word("", "");
 		word.setWordbookid(wordbookid);
 		
-		//wordBook.setId(userId);
-		
 		
 		List<Word> wordList = null;
 		
