@@ -85,7 +85,7 @@ public class WordController {
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=UTF-8");
-		return new ResponseEntity<String>(MyJsonUtil.toString(wordList, "wordbooks"), responseHeaders, HttpStatus.CREATED);
+		return new ResponseEntity<String>(MyJsonUtil.toString(wordList, "words"), responseHeaders, HttpStatus.CREATED);
     }
 	
 }
