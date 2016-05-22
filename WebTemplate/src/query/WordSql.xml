@@ -17,9 +17,9 @@
  		FROM Word
  		WHERE 
  			ID = ID
- 		<isNotEmpty property="wordbookid">
- 			and WORDBOOKID = #wordbookid#
- 		</isNotEmpty>
+ 		<isGreaterThan prepend="AND" property="wordbookid" compareValue="0">
+ 			WORDBOOKID = #wordbookid#
+ 		</isGreaterThan>	
  	</select>
  	
 	<select id="readWord" resultMap="Word">
