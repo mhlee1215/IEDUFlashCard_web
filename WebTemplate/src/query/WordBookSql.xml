@@ -7,30 +7,32 @@
  	<resultMap id="WordBook" class="edu.iedu.flashcard.dao.domain.WordBook">
 		<result column="ID" property="id" />
 		<result column="NAME" property="name" />
- 	</resultMap>
- 	
- 	<resultMap id="Word2WordBook" class="edu.iedu.flashcard.dao.domain.User2WordBook">
+		<result column="AUTHOR" property="author" />
 		<result column="USERID" property="userid" />
-		<result column="WORDBOOKID" property="wordbookid" />
  	</resultMap>
  	
  	
  	<select id="readWordBookList" resultMap="WordBook">
- 		SELECT ID, NAME 
+ 		SELECT ID, NAME, AUTHOR, USERID
  		FROM wordbook
  		WHERE 
  			ID = ID
  		<isGreaterThan prepend="AND" property="id" compareValue="0">
  			ID = #id#
  		</isGreaterThan>
- 		
+ 		<isGreaterThan prepend="AND" property="userid" compareValue="0">
+ 			USERID = #userid#
+ 		</isGreaterThan>
+ 		<isNotEmpty property="author">
+ 			and AUTHOR like '%$author$%'
+ 		</isNotEmpty>
  		<isNotEmpty property="name">
  			and NAME like '%$name$%'
  		</isNotEmpty>
  	</select>
  	
 	<select id="readWordBook" resultMap="WordBook">
-       SELECT ID, NAME 
+       SELECT ID, NAME, AUTHOR, USERID 
  		FROM wordbook
  		WHERE 
  			ID = ID
@@ -45,8 +47,8 @@
 
 	<insert id="createWordBook" parameterClass="edu.iedu.flashcard.dao.domain.WordBook">
 		 INSERT INTO
-		 wordbook (ID, NAME)
-		 VALUES (#id#, #name#)
+		 wordbook (ID, NAME, AUTHOR, USERID)
+		 VALUES (#id#, #name#, #author#, #userid#)
 	</insert>
 	
 	<update id="updateWordBook" parameterClass="edu.iedu.flashcard.dao.domain.WordBook">
@@ -62,6 +64,11 @@
 		 DELETE FROM wordbook
 		 WHERE ID = #id# 
 	</update>
+	
+	<select id="getNextID" resultClass ="int">
+		SELECT max(ID)+1
+		FROM wordbook
+	</select>
 </sqlMap>
 
 

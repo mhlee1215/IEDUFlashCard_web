@@ -52,26 +52,32 @@ public class WordBookController {
 
 
 
-
+	
 
 	
 	
 	@RequestMapping(value="/addWordBook.do")
     public @ResponseBody String addWordBook(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-		int id = ServletRequestUtils.getIntParameter(request, "id", 0);
 		String name = ServletRequestUtils.getStringParameter(request, "name", "");
+		String author = ServletRequestUtils.getStringParameter(request, "author", "");
+		int userid = ServletRequestUtils.getIntParameter(request, "userid", 0);
 		
 		WordBook wb = new WordBook(name);
-		wb.setId(id);
-		
+		wb.setAuthor(author);
+		wb.setUserid(userid);
 		try {
 			wordBookService.createWordBook(wb);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return "success";
+    }
+	
+	@RequestMapping(value="/getNextID.do")
+    public @ResponseBody String getNextID(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		int maxidplusone = wordBookService.getNextID();		
+		return "" +maxidplusone;
     }
 	
 	@RequestMapping(value="/readWordBook.do")

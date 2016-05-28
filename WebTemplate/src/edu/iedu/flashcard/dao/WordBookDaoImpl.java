@@ -38,8 +38,9 @@ public class WordBookDaoImpl extends SqlMapClientDaoSupport implements WordBookD
 	}
 
 
-	public void createWordBook(WordBook word) {
+	public int createWordBook(WordBook word) {
 		getSqlMapClientTemplate().insert("WordBookSql.createWordBook", word);
+		return 0;
 	}
 
 
@@ -51,6 +52,10 @@ public class WordBookDaoImpl extends SqlMapClientDaoSupport implements WordBookD
 
 	public void updateWordBook(WordBook word) {
 		getSqlMapClientTemplate().update("WordBookSql.updateWordBook", word);
+	}
+	
+	public int getNextID() {
+		return (Integer)getSqlMapClientTemplate().queryForObject("WordBookSql.getNextID");
 	}
 
 }

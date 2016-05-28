@@ -11,4 +11,5 @@ public interface WordBookService {
 	public int createWordBook(WordBook word) throws Exception;
 	public void updateWordBook(WordBook word);
 	public int deleteWordBook(WordBook word);
+	public int getNextID();
 }

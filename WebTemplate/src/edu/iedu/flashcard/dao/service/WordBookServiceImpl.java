@@ -45,8 +45,11 @@ public class WordBookServiceImpl implements WordBookService {
 	}
 
 	public int createWordBook(WordBook word) throws Exception {
+		//Get next id
+		int nextId = wordBookDao.getNextID();
+		word.setId(nextId);
 		wordBookDao.createWordBook(word);
-		return 0;
+		return nextId;
 	}
 
 	public WordBook readWordBook(WordBook word) throws Exception {
@@ -64,5 +67,9 @@ public class WordBookServiceImpl implements WordBookService {
 	public int deleteWordBook(WordBook word) {
 		wordBookDao.deleteWordBook(word);
 		return 0;
+	}
+	
+	public int getNextID() {
+		return wordBookDao.getNextID();
 	}
 }
