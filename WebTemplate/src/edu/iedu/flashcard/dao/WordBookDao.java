@@ -10,5 +10,6 @@ public interface WordBookDao {
 	public void createWordBook(WordBook word);
 	public void deleteWordBook(WordBook word);
 	public void updateWordBook(WordBook word);
+	public List<WordBook> readWordBookList(WordBook word);
 	public List<WordBook> findAll();
 }

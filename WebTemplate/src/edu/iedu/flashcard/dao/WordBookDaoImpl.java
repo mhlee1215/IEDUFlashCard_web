@@ -27,10 +27,14 @@ public class WordBookDaoImpl extends SqlMapClientDaoSupport implements WordBookD
 		return array;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<WordBook> readWordBookList(WordBook word) {
+		List<WordBook> array = getSqlMapClientTemplate().queryForList("WordBookSql.readWordBookList", word);
+		return array;
+	}
 
 	public WordBook readWordBook(WordBook word) {
-		WordBook result = (WordBook)getSqlMapClientTemplate().queryForObject("WordBookSql.readWordBook", word);
-		return result;
+		return (WordBook)getSqlMapClientTemplate().queryForObject("WordBookSql.readWordBook", word);
 	}
 
 

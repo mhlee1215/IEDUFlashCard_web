@@ -10,5 +10,5 @@ public interface WordBookService {
 	public WordBook readWordBook(WordBook word) throws Exception;
 	public int createWordBook(WordBook word) throws Exception;
 	public void updateWordBook(WordBook word);
-	public int deleteWordBook(String id);
+	public int deleteWordBook(WordBook word);
 }

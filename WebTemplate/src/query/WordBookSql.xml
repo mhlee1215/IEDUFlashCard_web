@@ -17,7 +17,7 @@
  	
  	<select id="readWordBookList" resultMap="WordBook">
  		SELECT ID, NAME 
- 		FROM WordBook
+ 		FROM wordbook
  		WHERE 
  			ID = ID
  		<isNotEmpty property="id">
@@ -30,7 +30,7 @@
  	
 	<select id="readWordBook" resultMap="WordBook">
        SELECT ID, NAME 
- 		FROM WordBook
+ 		FROM wordbook
  		WHERE 
  			ID = ID
  		<isNotEmpty property="id">
@@ -43,12 +43,12 @@
 
 	<insert id="createWordBook" parameterClass="edu.iedu.flashcard.dao.domain.WordBook">
 		 INSERT INTO
-		 WordBook (ID, NAME)
+		 wordbook (ID, NAME)
 		 VALUES (#id#, #name#)
 	</insert>
 	
 	<update id="updateWordBook" parameterClass="edu.iedu.flashcard.dao.domain.WordBook">
-		 UPDATE Word SET
+		 UPDATE wordbook SET
 		 ID = #id#
 		 <isNotEmpty property="name">
 		 ,NAME = #name#
@@ -57,7 +57,7 @@
 	</update>
 	
 	<update id="deleteWordBook" parameterClass="edu.iedu.flashcard.dao.domain.WordBook">
-		 DELETE WordBook
+		 DELETE FROM wordbook
 		 WHERE ID = #id# 
 	</update>
 </sqlMap>

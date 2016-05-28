@@ -36,41 +36,21 @@ public class WordBookServiceImpl implements WordBookService {
 	boolean isEncrypt = true;
 
 	public List<WordBook> findAll() {
-		
-		List<WordBook> wordBookList = new ArrayList<WordBook>();
-		
-		for(int i = 0 ; i < 10 ; i++){
-			WordBook book = new WordBook("wordBook_"+i);
-			book.setWordList(wordDao.findAll());
-			wordBookList.add(book);
-		}
-		
-		return wordBookList;
+		return wordBookDao.findAll();
 	}
 	
-	public List<WordBook> readWordBookList(WordBook wordBook) {
-		
-		List<WordBook> wordBookList = new ArrayList<WordBook>();
-		
-		for(int i = 0 ; i < 10 ; i++){
-			WordBook book = new WordBook("wordBook_"+i);
-			//book.setWordList(wordService.findAll());
-			wordBookList.add(book);
-		}
-		
+	public List<WordBook> readWordBookList(WordBook word) throws Exception {
+		List<WordBook> wordBookList = wordBookDao.readWordBookList(word);
 		return wordBookList;
 	}
 
 	public int createWordBook(WordBook word) throws Exception {
-		
+		wordBookDao.createWordBook(word);
 		return 0;
-		
 	}
 
 	public WordBook readWordBook(WordBook word) throws Exception {
-		WordBook book = new WordBook("MywordBook");
-		book.setWordList(wordDao.findAll());
-		return book;
+		return wordBookDao.readWordBook(word);
 	}
 	
 	public WordBook readWordBookData(WordBook word) throws Exception {
@@ -81,8 +61,8 @@ public class WordBookServiceImpl implements WordBookService {
 		wordBookDao.updateWordBook(word);
 	}
 	
-	public int deleteWordBook(String email) {
+	public int deleteWordBook(WordBook word) {
+		wordBookDao.deleteWordBook(word);
 		return 0;
-	
 	}
 }
