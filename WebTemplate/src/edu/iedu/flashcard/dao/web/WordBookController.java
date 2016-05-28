@@ -63,6 +63,7 @@ public class WordBookController {
 		int userid = ServletRequestUtils.getIntParameter(request, "userid", 0);
 		
 		WordBook wb = new WordBook(name);
+		
 		wb.setAuthor(author);
 		wb.setUserid(userid);
 		try {
