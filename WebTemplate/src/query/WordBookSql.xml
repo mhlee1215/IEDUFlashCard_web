@@ -20,11 +20,12 @@
  		FROM wordbook
  		WHERE 
  			ID = ID
- 		<isNotEmpty property="id">
- 			and ID = #id#
- 		</isNotEmpty>
+ 		<isGreaterThan prepend="AND" property="id" compareValue="0">
+ 			ID = #id#
+ 		</isGreaterThan>
+ 		
  		<isNotEmpty property="name">
- 			and NAME like #name#
+ 			and NAME like '%$name$%'
  		</isNotEmpty>
  	</select>
  	
@@ -33,9 +34,10 @@
  		FROM wordbook
  		WHERE 
  			ID = ID
- 		<isNotEmpty property="id">
- 			and ID = #id#
- 		</isNotEmpty>
+ 		<isGreaterThan prepend="AND" property="id" compareValue="0">
+ 			ID = #id#
+ 		</isGreaterThan>
+ 		
  		<isNotEmpty property="name">
  			and NAME like #name#
  		</isNotEmpty>
