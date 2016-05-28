@@ -22,8 +22,8 @@ public class WordDaoImpl extends SqlMapClientDaoSupport implements WordDao {
 	
 	
 	@SuppressWarnings("unchecked")
-	public List<Word> findAll() {	
-		List<Word> array = getSqlMapClientTemplate().queryForList("WordSql.readWordList");
+	public List<Word> readWordList(Word word) {	
+		List<Word> array = getSqlMapClientTemplate().queryForList("WordSql.readWordList", word);
 		return array;
 	}
 
@@ -34,8 +34,10 @@ public class WordDaoImpl extends SqlMapClientDaoSupport implements WordDao {
 	}
 
 
-	public void createWord(Word word) {
+	public int createWord(Word word) {
 		getSqlMapClientTemplate().insert("WordSql.createWord", word);
+		
+		return 0;
 	}
 
 

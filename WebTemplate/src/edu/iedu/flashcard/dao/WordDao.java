@@ -7,8 +7,8 @@ import edu.iedu.flashcard.dao.domain.Word;
 
 public interface WordDao {
 	public Word readWord(Word word);
-	public void createWord(Word word);
+	public int createWord(Word word);
 	public void deleteWord(Word word);
 	public void updateWord(Word word);
-	public List<Word> findAll();
+	public List<Word> readWordList(Word word);
 }

@@ -47,7 +47,7 @@ public class WordController {
 	@Autowired
 	private final WordService wordService = null;
 
-
+	
 
 
 
@@ -56,12 +56,91 @@ public class WordController {
 	@RequestMapping(value="/addWord.do")
     public @ResponseBody String addWord(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		
-		String userId = ServletRequestUtils.getStringParameter(request, "userId", "");
-		String wordBookId = ServletRequestUtils.getStringParameter(request, "wordBookId", "");
+		int wordBookId = ServletRequestUtils.getIntParameter(request, "wordBookId", -1);
 		String name = ServletRequestUtils.getStringParameter(request, "word", "");
-		String email = ServletRequestUtils.getStringParameter(request, "meaning", "");
+		String meaning = ServletRequestUtils.getStringParameter(request, "meaning", "");
+		
+		System.out.println(wordBookId+", "+name+", "+meaning);
+		
+		Word temp = new Word(name, meaning);
+		temp.setWordbookid(wordBookId);
+
+		System.out.println(temp);
+		
+		try {
+			wordService.createWord(temp);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 					
-		return "success";
+		return temp.toString();
+    }
+	
+	@RequestMapping(value="/deleteWord.do")
+    public @ResponseBody String deleteWord(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		
+		int id = ServletRequestUtils.getIntParameter(request, "id", -1);
+		int wordBookId = ServletRequestUtils.getIntParameter(request, "wordBookId", -1);
+		String name = ServletRequestUtils.getStringParameter(request, "name", "");
+		String meaning = ServletRequestUtils.getStringParameter(request, "meaning", "");
+		
+		Word temp = new Word(name, meaning);
+		temp.setId(id);
+		temp.setWordbookid(wordBookId);
+		
+		try {
+			wordService.deleteWord(temp);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+					
+		return "removed \""+name+", "+meaning+"\" with wordbookId"+ wordBookId + "and id" + id;
+    }
+	
+	@RequestMapping(value="/updateWord.do")
+    public @ResponseBody String updateWord(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		
+		int id = ServletRequestUtils.getIntParameter(request, "id", -1);
+		int wordBookId = ServletRequestUtils.getIntParameter(request, "wordBookId", -1);
+		String name = ServletRequestUtils.getStringParameter(request, "name", "");
+		String meaning = ServletRequestUtils.getStringParameter(request, "meaning", "");
+		
+		Word temp = new Word(name, meaning);
+		temp.setId(id);
+		temp.setWordbookid(wordBookId);
+		
+		try {
+			wordService.updateWord(temp);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+					
+		return "updated";
+    }
+	
+	@RequestMapping(value="/readWordList.do")
+    public @ResponseBody String readWord(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		
+		//get parameters
+		String name = ServletRequestUtils.getStringParameter(request, "word", "");
+		String meaning = ServletRequestUtils.getStringParameter(request, "meaning", "");
+		
+		Word temp = new Word(name, meaning);
+		List<Word> word = null;
+		try {
+			word = wordService.readWordList(temp);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.print(word);
+		
+		return "ayy";
     }
 	
 	@RequestMapping(value="/readWordList.do")

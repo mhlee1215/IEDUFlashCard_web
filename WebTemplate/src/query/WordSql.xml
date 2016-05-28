@@ -13,8 +13,8 @@
  	
 
  	<select id="readWordList" resultMap="Word">
- 		SELECT ID, WORD, MEANING 
- 		FROM Word
+ 		SELECT ID, NAME, MEANING 
+ 		FROM word
  		WHERE 
  			ID = ID
  		<isGreaterThan prepend="AND" property="wordbookid" compareValue="0">
@@ -24,7 +24,7 @@
  	
 	<select id="readWord" resultMap="Word">
        SELECT ID, NAME, WORDBOOKID, MEANING 
-       FROM Word 
+       FROM word 
        WHERE 
        		ID = ID
        <isNotEmpty property="name">
@@ -40,21 +40,21 @@
 
 	<insert id="createWord" parameterClass="edu.iedu.flashcard.dao.domain.Word">
 		 INSERT INTO
-		 Word (NAME, WORDBOOKID, MEANING)
+		 word (NAME, WORDBOOKID, MEANING)
 		 VALUES (#name#, #wordbookid#, #meaning#)
 	</insert>
 	
 	<update id="updateWord" parameterClass="edu.iedu.flashcard.dao.domain.Word">
-		 UPDATE Word SET
-		 ID = #id#
-		 <isNotEmpty property="password">
-		 ,PASSWORD = #password#
+		 UPDATE word SET
+		 MEANING = #meaning#
+		 <isNotEmpty property="name">
+		 ,NAME = #name#
 		 </isNotEmpty>
 		 WHERE ID = #id# 
 	</update>
 	
 	<update id="deleteWord" parameterClass="edu.iedu.flashcard.dao.domain.Word">
-		 DELETE WORD 
+		 DELETE FROM word 
 		 WHERE ID = #id# 
 	</update>
 </sqlMap>

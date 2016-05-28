@@ -29,15 +29,13 @@ public class WordServiceImpl implements WordService {
 
 	public List<Word> findAll() {
 		
-		List<Word> wordList = new ArrayList<Word>(); 
-		for(int i = 0 ; i < 30 ; i++){
-			wordList.add(new Word("Word_"+i, "Meaning_"+i));
-		}
-		
+		List<Word> wordList = wordDao.readWordList(new Word("", ""));
 		return wordList;
 	}
 
 	public int createWord(Word word) throws Exception {
+		
+		wordDao.createWord(word);
 		
 		return 0;
 		
@@ -45,17 +43,15 @@ public class WordServiceImpl implements WordService {
 
 	public List<Word> readWordList(Word word) {
 		
-		List<Word> wordList = new ArrayList<Word>(); 
-		for(int i = 0 ; i < 30 ; i++){
-			wordList.add(new Word("Word_"+i, "Meaning_"+i));
-		}
-		
-		return wordList;
+		String name = word.getName();
+		String meaning = word.getMeaning();
+		List<Word> a = wordDao.readWordList(new Word(name, meaning));
+		return a;
 	}
 	
 	public Word readWord(Word word) throws Exception {
-		Word myWord = new Word("myWord", "myMeaning");
-		return myWord;
+		Word x = wordDao.readWord(word);
+		return x;
 	}
 	
 	public Word readWordData(Word word) throws Exception {
@@ -66,8 +62,9 @@ public class WordServiceImpl implements WordService {
 		wordDao.updateWord(word);
 	}
 	
-	public int deleteWord(String email) {
+	public int deleteWord(Word word) {
+		wordDao.deleteWord(word);
+		
 		return 0;
-	
 	}
 }

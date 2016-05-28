@@ -10,5 +10,5 @@ public interface WordService {
 	public Word readWord(Word word) throws Exception;
 	public int createWord(Word word) throws Exception;
 	public void updateWord(Word word);
-	public int deleteWord(String id);
+	public int deleteWord(Word word);
 }
