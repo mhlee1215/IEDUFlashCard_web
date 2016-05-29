@@ -53,8 +53,8 @@ public class WordController {
 
 
 
-	@RequestMapping(value="/dummyData.do")
-	public @ResponseBody String dummyData(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+	@RequestMapping(value="/dummyWordData.do")
+	public @ResponseBody String dummyWordData(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		String name = "word";
 		String meaning = "meaning";
 		int count = 0;
@@ -65,6 +65,7 @@ public class WordController {
 			for (int card = 1 ; card <11 ; card++){
 				temp.add(new Word(name+wbid+"_"+card, meaning));
 				temp.get(count).setWordbookid(wbid);
+				temp.get(count).setId(count+1);
 				count++;
 			}
 		}
