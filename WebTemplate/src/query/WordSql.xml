@@ -57,6 +57,12 @@
 		 DELETE FROM word 
 		 WHERE ID = #id# 
 	</update>
+	
+	<update id="deleteWordbookWords" parameterClass="edu.iedu.flashcard.dao.domain.Word">
+		 DELETE FROM word 
+		 WHERE WORDBOOKID = #wordbookid# 
+	</update>
+	
 </sqlMap>
 
 

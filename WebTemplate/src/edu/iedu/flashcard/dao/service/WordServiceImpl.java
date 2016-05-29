@@ -62,6 +62,12 @@ public class WordServiceImpl implements WordService {
 		wordDao.updateWord(word);
 	}
 	
+	public int deleteWordbookWords(int wordbookId) {
+		wordDao.deleteWordbookWords(wordbookId);
+		
+		return 0;
+	}
+	
 	public int deleteWord(Word word) {
 		wordDao.deleteWord(word);
 		

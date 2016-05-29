@@ -62,7 +62,7 @@ public class WordController {
 		List<Word> temp = new ArrayList<Word>();
 		
 		for (int wbid = 1 ; wbid < 11 ; wbid++){
-			for (int card = 1 ; card <11 ; card++){
+			for (int card = 1 ; card <31 ; card++){
 				temp.add(new Word(name+wbid+"_"+card, meaning));
 				temp.get(count).setWordbookid(wbid);
 				temp.get(count).setId(count+1);
