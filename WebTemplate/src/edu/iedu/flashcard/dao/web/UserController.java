@@ -32,7 +32,6 @@ import edu.iedu.flashcard.dao.util.MyJsonUtil;
 
 
 
-
 @Controller
 public class UserController {
 
@@ -40,9 +39,6 @@ public class UserController {
 
 	@Autowired
 	private final UserService userService = null;
-
-
-
 
 	@RequestMapping("/index.do")
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -136,6 +132,24 @@ public class UserController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=UTF-8");
 		return new ResponseEntity<String>(MyJsonUtil.toString(users, "users"), responseHeaders, HttpStatus.CREATED);
+	}
+	
+	@RequestMapping("/readUser.do")
+	public ResponseEntity<String>  readUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String email = ServletRequestUtils.getStringParameter(request, "email", "");
+		User user = new User();
+		user.setEmail(URLDecoder.decode(email, "UTF-8"));
+		
+		User readUser = userService.readUserData(user);
+		
+		List<User> userList = new ArrayList<User>();
+		userList.add(readUser);
+		
+		System.out.println(readUser);
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=UTF-8");
+		return new ResponseEntity<String>(MyJsonUtil.toString(userList, "users"), responseHeaders, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/addUser.do")
