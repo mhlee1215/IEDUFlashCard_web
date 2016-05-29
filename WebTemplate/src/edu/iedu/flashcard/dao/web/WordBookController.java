@@ -54,6 +54,27 @@ public class WordBookController {
 
 
 	
+	
+	@RequestMapping(value="/importWordBook.do")
+    public @ResponseBody String importWordBook(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		int id = ServletRequestUtils.getIntParameter(request, "id", 0);
+		int userid = ServletRequestUtils.getIntParameter(request, "userid", 0);
+		
+		WordBook wb = new WordBook();
+		wb.setId(id);
+		WordBook samewb = new WordBook();
+		
+		try {
+			samewb = wordBookService.readWordBook(wb);
+			samewb.setUserid(userid);
+			samewb.setId(wordBookService.getNextID());
+			wordBookService.createWordBook(samewb);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "success";
+    }
 
 	@RequestMapping(value="/deleteWordBookAndWords.do")
     public @ResponseBody String deleteWordBookAndWords(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
@@ -92,7 +113,7 @@ public class WordBookController {
     }
 	
 	@RequestMapping(value="/getNextID.do")
-    public @ResponseBody String getNextID(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+    public @ResponseBody String getNextID() throws UnsupportedEncodingException {
 		int maxidplusone = wordBookService.getNextID();		
 		return "" +maxidplusone;
     }
