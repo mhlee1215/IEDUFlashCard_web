@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import edu.iedu.flashcard.dao.domain.User;
+import edu.iedu.flashcard.dao.domain.Word;
 import edu.iedu.flashcard.dao.domain.WordBook;
 import edu.iedu.flashcard.dao.service.UserService;
 import edu.iedu.flashcard.dao.service.WordBookService;
@@ -54,7 +55,23 @@ public class WordBookController {
 
 	
 
+	@RequestMapping(value="/deleteWordBookAndWords.do")
+    public @ResponseBody String deleteWordBookAndWords(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		int id = ServletRequestUtils.getIntParameter(request, "id", 0);
 		
+		WordBook wb = new WordBook();
+		wb.setId(id);
+		Word word = new Word();
+		word.setWordbookid(id);
+		try {
+			wordBookService.deleteWordBook(wb);
+			wordService.deleteWordbookWords(word);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "success";
+    }
 	
 	@RequestMapping(value="/addWordBook.do")
     public @ResponseBody String addWordBook(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
@@ -63,7 +80,6 @@ public class WordBookController {
 		int userid = ServletRequestUtils.getIntParameter(request, "userid", 0);
 		
 		WordBook wb = new WordBook(name);
-		
 		wb.setAuthor(author);
 		wb.setUserid(userid);
 		try {
