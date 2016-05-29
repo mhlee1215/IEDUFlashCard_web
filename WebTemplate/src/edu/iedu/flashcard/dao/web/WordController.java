@@ -51,35 +51,40 @@ public class WordController {
 	@Autowired
 	private final WordBookService wordBookService = null;
 
-
-
-	@RequestMapping(value="/dummyWordData.do")
-	public @ResponseBody String dummyWordData(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+	
+	
+	@RequestMapping(value="/dummyData.do")
+	public @ResponseBody String dummyData(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		String name = "word";
 		String meaning = "meaning";
-		int count = 0;
-
-		List<Word> temp = new ArrayList<Word>();
 		
-		for (int wbid = 1 ; wbid < 11 ; wbid++){
-			for (int card = 1 ; card <31 ; card++){
-				temp.add(new Word(name+wbid+"_"+card, meaning));
-				temp.get(count).setWordbookid(wbid);
-				temp.get(count).setId(count+1);
-				count++;
-			}
-		}
-
-		for(Word x : temp){
+		for(int wb = 1; wb < 11 ; wb++){
+			WordBook wordbook = new WordBook("dummyWordbook_"+wb);
+			int wordbookId = -1;
 			try {
-				wordService.createWord(x);
+				wordbookId = wordBookService.createWordBook(wordbook);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			for(int words = 1; words < 31 ; words++){
+				Word dummyWord = new Word(name+wb+"_"+words, meaning);
+				
+				if(wordbookId == -1){
+					return "wordbook creation failed";
+				}
+				
+				dummyWord.setWordbookid(wordbookId);
+				try {
+					wordService.createWord(dummyWord);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
-
-
+		
 		return "dummy created";
 	}
 
