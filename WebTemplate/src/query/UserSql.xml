@@ -21,14 +21,15 @@
        SELECT ID, NAME, EMAIL 
        FROM user 
        WHERE 
+       		ID = ID
        <isNotEmpty property="name">
-       		NAME = #name#
+       		and NAME = #name#
        </isNotEmpty>
         <isNotEmpty property="email">
-       		EMAIL = #email#
+       		and EMAIL = #email#
        </isNotEmpty>
        <isNotEmpty property="password">
-       and PASSWORD = #password#
+       		and PASSWORD = #password#
        </isNotEmpty>
 	</select>
 
