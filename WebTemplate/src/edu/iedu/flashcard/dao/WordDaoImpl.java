@@ -46,8 +46,8 @@ public class WordDaoImpl extends SqlMapClientDaoSupport implements WordDao {
 		
 	}
 	
-	public void deleteWordbookWords(int wordbookId) {
-		getSqlMapClientTemplate().delete("WordSql.deleteWord", wordbookId);
+	public void deleteWordbookWords(Word word) {
+		getSqlMapClientTemplate().delete("WordSql.deleteWord", word);
 		
 	}
 

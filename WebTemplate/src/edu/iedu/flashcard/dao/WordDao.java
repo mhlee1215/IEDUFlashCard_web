@@ -9,7 +9,7 @@ public interface WordDao {
 	public Word readWord(Word word);
 	public int createWord(Word word);
 	public void deleteWord(Word word);
-	public void deleteWordbookWords(int wordbookId);
+	public void deleteWordbookWords(Word word);
 	public void updateWord(Word word);
 	public List<Word> readWordList(Word word);
 }
