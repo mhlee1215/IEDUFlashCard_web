@@ -87,6 +87,18 @@ public class WordController {
 		
 		return "dummy created";
 	}
+	
+	@RequestMapping("/table-word.do")
+	public ModelAndView tableWord(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		List<Word> words = wordService.findAll();
+		
+		ModelAndView table = new ModelAndView("table-word");
+		
+		table.addObject("Word", words);
+		
+		return table;
+	}
 
 
 

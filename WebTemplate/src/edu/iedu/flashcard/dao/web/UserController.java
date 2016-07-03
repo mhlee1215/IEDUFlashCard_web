@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import edu.iedu.flashcard.dao.domain.User;
+import edu.iedu.flashcard.dao.domain.Word;
 import edu.iedu.flashcard.dao.service.UserService;
 import edu.iedu.flashcard.dao.util.MyJsonUtil;
 
@@ -51,7 +52,41 @@ public class UserController {
 
 		return model;
 	}
+	
+	@RequestMapping("/table-user.do")
+	public ModelAndView tableUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		List<User> users = userService.findAll();
+		
+		ModelAndView table = new ModelAndView("table-user");
+		
+		table.addObject("User", users);
+		
+		return table;
+	}
+	
+	@RequestMapping(value="/deleteUser.do")
+	public @ResponseBody String deleteWord(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+
+		int id = ServletRequestUtils.getIntParameter(request, "id", -1);
+		String name = ServletRequestUtils.getStringParameter(request, "name", "");
+		String email = ServletRequestUtils.getStringParameter(request, "email", "");
+
+		User temp = new User();
+		temp.setId(id);
+		temp.setName(name);
+		temp.setEmail(email);
+
+		try {
+			userService.deleteUser(temp);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return "removed \""+name+"\" with email"+ email + "and id" + id;
+	}
+	
 	@RequestMapping("/userList.do")
 	public ModelAndView userList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 

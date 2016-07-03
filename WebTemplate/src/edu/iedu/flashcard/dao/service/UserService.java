@@ -15,5 +15,5 @@ public interface UserService {
 	public int createUser(User user) throws Exception;
 	public void updateUser(User user);
 	public List<User> findAll();
-	public int deleteUser(String id);
+	public int deleteUser(User user);
 }
