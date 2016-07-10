@@ -43,9 +43,9 @@ public class WordServiceImpl implements WordService {
 
 	public List<Word> readWordList(Word word) {
 		
-		String name = word.getName();
-		String meaning = word.getMeaning();
-		List<Word> a = wordDao.readWordList(new Word(name, meaning));
+//		String name = word.getName();
+//		String meaning = word.getMeaning();
+		List<Word> a = wordDao.readWordList(word);
 		return a;
 	}
 	

@@ -59,7 +59,8 @@ public class WordController {
 		String meaning = "meaning";
 		
 		for(int wb = 1; wb < 11 ; wb++){
-			WordBook wordbook = new WordBook("dummyWordbook_"+wb);
+			WordBook wordbook = new WordBook("dummyWordbook1_"+wb);
+			wordbook.setUserid(10);
 			int wordbookId = -1;
 			try {
 				wordbookId = wordBookService.createWordBook(wordbook);
@@ -182,7 +183,7 @@ public class WordController {
 
 	@RequestMapping(value="/readWordList.do")
 	public ResponseEntity<String> readWordList(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {	
-		int wordbookid = ServletRequestUtils.getIntParameter(request, "wordbookid", -1);
+		int wordbookid = ServletRequestUtils.getIntParameter(request, "wordbookId", -1);
 
 		Word word = new Word("", "");
 		word.setWordbookid(wordbookid);
