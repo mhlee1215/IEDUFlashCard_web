@@ -1,6 +1,7 @@
-<!doctype html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <html class="no-js" lang="en">
-
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,6 +12,7 @@
         <!-- Place favicon.ico in the root directory -->
         <link rel="stylesheet" href="css/vendor.css">
         <!-- Theme initialization -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
         <script>
             var themeSettings = (localStorage.getItem('themeSettings')) ? JSON.parse(localStorage.getItem('themeSettings')) :
             {};
@@ -23,6 +25,22 @@
             {
                 document.write('<link rel="stylesheet" id="theme-style" href="css/app.css">');
             }
+        </script>
+        <script type="text/javascript">
+        	function deleteUser(ID){
+        		//alert('I will delete ID:'+ID);
+        		$.ajax({
+        			url:'deleteUser.do',
+        			data:{
+        				id:ID
+        			},
+        			success: function(result){
+        				//alert(result);
+        				$("#user_row_"+ID).remove();
+        			}
+        		});
+        	}
+        
         </script>
     </head>
 
@@ -150,14 +168,14 @@
                                         <li> <a href="responsive-tables.html">
     								Responsive Tables
     							</a> </li>
-								        <li> <a href="table-user.html">
-    								User Tables
+										<li class="active"> <a href="table-user.html">
+    								User Table
     							</a> </li>
-								        <li class="active"> <a href="table-word.html">
-    								Word Tables
+										<li> <a href="table-word.html">
+    								Word Table
     							</a> </li>
-								        <li> <a href="table-wordbook.html">
-    								Wordbook Tables
+										<li> <a href="table-wordbook.html">
+    								Wordbook Table
     							</a> </li>
                                     </ul>
                                 </li>
@@ -282,9 +300,9 @@
                 <article class="content responsive-tables-page">
                     <div class="title-block">
                         <h1 class="title">
-		Word Table
+		Users Table
 	</h1>
-                        <p class="title-description"> All Words </p>
+                        <p class="title-description"> All users </p>
                     </div>
 					
 					<section class="section">
@@ -296,86 +314,34 @@
                                             <div class="table-flip-scroll">
                                                 <table class="table table-striped table-bordered table-hover flip-content">
                                                     <thead class="flip-header">
-                                                        <tr>
+                                                        
+														<tr>
                                                             <th>ID</th>
-                                                            <th>Wordbook ID</th>
                                                             <th>Name</th>
-                                                            <th>Meaning</th>
+                                                            <th>Email</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>1</td>
-                                                            <td>Jelly</td>
-                                                            <td>Hello Hello I am Jello</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td	>2</td>
-                                                            <td>1</td>
-                                                            <td>Cat</td>
-                                                            <td>An animal that goes "meow"</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>1</td>
-                                                            <td>ayylmao</td>
-                                                            <td>ayylmao</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>4</td>
-                                                            <td>1</td>
-                                                            <td>doot</td>
-                                                            <td>DOOT</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>5</td>
-                                                            <td>1</td>
-                                                            <td>Windows</td>
-                                                            <td>plural of Window</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>6</td>
-                                                            <td>2</td>
-                                                            <td>Memes</td>
-                                                            <td>sustenance</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>7</td>
-                                                            <td>2</td>
-                                                            <td>Whiteboard</td>
-                                                            <td>a white board</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>8</td>
-                                                            <td>2</td>
-                                                            <td>Teacher</td>
-                                                            <td>one who teaches</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>9</td>
-                                                            <td>2</td>
-                                                            <td>Nine</td>
-                                                            <td>a number after Eight and before Ten</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>10</td>
-                                                            <td>3</td>
-                                                            <td>Watermelon</td>
-                                                            <td>a water melon</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>11</td>
-                                                            <td>3</td>
-                                                            <td>Tree</td>
-                                                            <td>tall thing that has leaves</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>12</td>
-                                                            <td>3</td>
-                                                            <td>Mouse</td>
-                                                            <td>squeak</td>
-                                                        </tr>
+                                                    	<c:forEach items="${User}" var="user" varStatus="list_status">
+                                                    		<tr id="user_row_${user.id}">
+                                                           		<td>${user.id}</td>
+                                                            	<td>${user.name}</td>
+                                                            	<td>${user.email}</td>
+                                                            	<td>
+																	<div class="btn-group">
+																		<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit</button>
+																		<div class="dropdown-menu"> 
+																			<a class="dropdown-item" href="#">Action</a> 
+																			<a class="dropdown-item" href="#">Another action</a> 
+																			<a class="dropdown-item" href="#">Something else here</a>
+                                                    						<div class="dropdown-divider"></div> 
+                                                    						<a class="dropdown-item" href="javascript:deleteUser(${user.id})">Delete</a> </div>
+                                          						  		</div>
+                                          							</div>
+																</td>
+                                                        	</tr>
+                                                    	</c:forEach>
                                                     </tbody>
                                                 </table>
                                             </div>

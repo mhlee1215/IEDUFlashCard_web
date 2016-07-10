@@ -39,6 +39,11 @@
 		 VALUES (#name#, #email#, #password#)
 	</insert>
 	
+	<insert id="deleteUser" parameterClass="edu.iedu.flashcard.dao.domain.User">
+		 DELETE FROM user 
+		 WHERE ID = #id# 
+	</insert>
+	
 	<update id="updateUser" parameterClass="edu.iedu.flashcard.dao.domain.User">
 		 UPDATE user SET
 		 ID = #id#

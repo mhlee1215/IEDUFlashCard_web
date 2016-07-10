@@ -78,12 +78,10 @@ public class UserServiceImpl implements UserService {
 		userDao.updateUser(user);
 	}
 	
-	public int deleteUser(String email) {
-		User paramUser = new User();
-		paramUser.setEmail(email);
-		userDao.deleteUser(paramUser);
+	public int deleteUser(User user) {
+		userDao.deleteUser(user);
 		
-		return User.STATUS_SUCCESS_DELETED;
+		return 0;
 		
 	}
 }
