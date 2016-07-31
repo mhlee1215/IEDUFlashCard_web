@@ -59,6 +59,9 @@
 		 <isNotEmpty property="name">
 		 ,NAME = #name#
 		 </isNotEmpty>
+		 <isNotEmpty property="isfavorite">
+		 ,ISFAVORITE = #isfavorite#
+		 </isNotEmpty>
 		 WHERE ID = #id# 
 	</update>
 	
