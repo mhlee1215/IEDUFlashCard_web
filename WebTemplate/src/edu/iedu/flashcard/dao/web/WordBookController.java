@@ -220,11 +220,13 @@ public class WordBookController {
 		String name = ServletRequestUtils.getStringParameter(request, "name", "");
 		String author = ServletRequestUtils.getStringParameter(request, "author", "");
 		int userid = ServletRequestUtils.getIntParameter(request, "userid", 0);
+		String isFavorite = ServletRequestUtils.getStringParameter(request, "isFavorite", "");
 		
 		WordBook wb = new WordBook(name);
 		wb.setId(id);
 		wb.setAuthor(author);
 		wb.setUserid(userid);
+		wb.setIsfavorite(isFavorite);
 		wordBookService.updateWordBook(wb);
 		
 		return "success";

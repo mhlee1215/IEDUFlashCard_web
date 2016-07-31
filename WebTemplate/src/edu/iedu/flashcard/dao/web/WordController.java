@@ -157,10 +157,12 @@ public class WordController {
 		int wordBookId = ServletRequestUtils.getIntParameter(request, "wordBookId", -1);
 		String name = ServletRequestUtils.getStringParameter(request, "name", "");
 		String meaning = ServletRequestUtils.getStringParameter(request, "meaning", "");
+		String isFavorite = ServletRequestUtils.getStringParameter(request, "isFavorite", "");
 
 		Word temp = new Word(name, meaning);
 		temp.setId(id);
 		temp.setWordbookid(wordBookId);
+		temp.setIsfavorite(isFavorite);
 
 		try {
 			wordService.updateWord(temp);
