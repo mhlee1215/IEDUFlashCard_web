@@ -386,7 +386,7 @@
                                     <div class="tab-pane fade active in" id="upload" role="tabpanel">
                                         <div class="upload-container">
                                             <div id="dropzone">
-                                                <form action="/" method="POST" enctype="multipart/form-data" class="dropzone needsclick dz-clickable" id="demo-upload">
+                                                <form action="/" method="post" enctype="multipart/form-data" class="dropzone needsclick dz-clickable" id="demo-upload">
                                                     <div class="dz-message-block">
                                                         <div class="dz-message needsclick"> Drop files here or click to upload. </div>
                                                     </div>
