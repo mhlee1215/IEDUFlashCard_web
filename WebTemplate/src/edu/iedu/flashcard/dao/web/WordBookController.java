@@ -150,10 +150,12 @@ public class WordBookController {
 		String name = ServletRequestUtils.getStringParameter(request, "name", "");
 		String author = ServletRequestUtils.getStringParameter(request, "author", "");
 		int userid = ServletRequestUtils.getIntParameter(request, "userid", 0);
+		String isfavorite = ServletRequestUtils.getStringParameter(request, "isfavorite", "N");
 		
 		WordBook wb = new WordBook(name);
 		wb.setAuthor(author);
 		wb.setUserid(userid);
+		wb.setIsfavorite(isfavorite);
 		try {
 			wordBookService.createWordBook(wb);
 		} catch (Exception e) {

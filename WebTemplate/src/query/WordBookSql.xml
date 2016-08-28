@@ -15,7 +15,7 @@
  	
  	
  	<select id="readWordBookList" resultMap="WordBook">
- 		SELECT a.ID, a.NAME, AUTHOR, USERID, count(a.ID) SIZE, ISFAVORITE
+ 		SELECT a.ID, a.NAME, AUTHOR, USERID, count(a.ID) SIZE, a.ISFAVORITE
  		FROM wordbook a inner join word b on a.id = b.wordbookid 
  		WHERE 
  			a.ID = a.ID
@@ -50,8 +50,8 @@
 
 	<insert id="createWordBook" parameterClass="edu.iedu.flashcard.dao.domain.WordBook">
 		 INSERT INTO
-		 wordbook (ID, NAME, AUTHOR, USERID)
-		 VALUES (#id#, #name#, #author#, #userid#)
+		 wordbook (ID, NAME, AUTHOR, USERID, ISFAVORITE)
+		 VALUES (#id#, #name#, #author#, #userid#, #isfavorite#)
 	</insert>
 	
 	<update id="updateWordBook" parameterClass="edu.iedu.flashcard.dao.domain.WordBook">
