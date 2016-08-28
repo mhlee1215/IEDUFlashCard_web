@@ -195,10 +195,12 @@ public class WordBookController {
     public ResponseEntity<String> readWordBookList(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {	
 		int id = ServletRequestUtils.getIntParameter(request, "id", -1);
 		String name = ServletRequestUtils.getStringParameter(request, "name", "");
+		int userId = ServletRequestUtils.getIntParameter(request, "userId", -1);
 					
 		WordBook wordBook = new WordBook(name);
 		wordBook.setId(id);
 		wordBook.setName(name);
+		wordBook.setUserid(userId);
 		
 		List<WordBook> wordBookList = new ArrayList<WordBook>();
 		
