@@ -60,7 +60,7 @@ public class WordController {
 		
 		for(int wb = 1; wb < 11 ; wb++){
 			WordBook wordbook = new WordBook("dummyWordbook1_"+wb);
-			wordbook.setUserid(10);
+			wordbook.setUserid(39);
 			int wordbookId = -1;
 			try {
 				wordbookId = wordBookService.createWordBook(wordbook);
