@@ -214,13 +214,13 @@ public class WordBookController {
 		return new ResponseEntity<String>(MyJsonUtil.toString(wordBookList, "wordbooks"), responseHeaders, HttpStatus.CREATED);
     }
 
-	@RequestMapping(value="/updateWordBookList.do")
+	@RequestMapping(value="/updateWordBook.do")
     public @ResponseBody String updateWordBookList(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		int id = ServletRequestUtils.getIntParameter(request, "id", 0);
 		String name = ServletRequestUtils.getStringParameter(request, "name", "");
 		String author = ServletRequestUtils.getStringParameter(request, "author", "");
 		int userid = ServletRequestUtils.getIntParameter(request, "userid", 0);
-		String isFavorite = ServletRequestUtils.getStringParameter(request, "isFavorite", "");
+		String isFavorite = ServletRequestUtils.getStringParameter(request, "isfavorite", "");
 		
 		WordBook wb = new WordBook(name);
 		wb.setId(id);
