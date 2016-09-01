@@ -3,7 +3,8 @@ package edu.iedu.flashcard.dao.util;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 
-import org.apache.catalina.util.Base64;
+//import org.apache.catalina.util.Base64;
+import javax.xml.bind.DatatypeConverter;
 
 public class Crypto {
 	/**
@@ -99,7 +100,7 @@ public class Crypto {
             MessageDigest md = MessageDigest.getInstance("SHA-512");
             byte[] bytes = plainText.getBytes(Charset.forName("UTF-8"));
             md.update(bytes);
-            return Base64.encode(md.digest());
+            return DatatypeConverter.printBase64Binary(md.digest());
         } catch (Exception e) {
             System.out.println("Sha512 error.");
             e.printStackTrace();
@@ -183,8 +184,8 @@ public class Crypto {
 		String password = "a123411112312";
 		password = Crypto.encrypt(password);
 		System.out.println("Encrypted : "+password);
-		password = Crypto.decrypt(password);
-		System.out.println("Decrypted : "+password);
+//		password = Crypto.decrypt(password);
+//		System.out.println("Decrypted : "+password);
 		
 //		
 //		if (ars.length < 2) {
