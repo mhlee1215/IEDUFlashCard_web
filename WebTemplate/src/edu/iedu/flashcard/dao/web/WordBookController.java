@@ -150,10 +150,12 @@ public class WordBookController {
 		String name = ServletRequestUtils.getStringParameter(request, "name", "");
 		String author = ServletRequestUtils.getStringParameter(request, "author", "");
 		int userid = ServletRequestUtils.getIntParameter(request, "userid", 0);
+		String isfavorite = ServletRequestUtils.getStringParameter(request, "isfavorite", "N");
 		
 		WordBook wb = new WordBook(name);
 		wb.setAuthor(author);
 		wb.setUserid(userid);
+		wb.setIsfavorite(isfavorite);
 		try {
 			wordBookService.createWordBook(wb);
 		} catch (Exception e) {
@@ -195,10 +197,12 @@ public class WordBookController {
     public ResponseEntity<String> readWordBookList(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {	
 		int id = ServletRequestUtils.getIntParameter(request, "id", -1);
 		String name = ServletRequestUtils.getStringParameter(request, "name", "");
+		int userId = ServletRequestUtils.getIntParameter(request, "userId", -1);
 					
 		WordBook wordBook = new WordBook(name);
 		wordBook.setId(id);
 		wordBook.setName(name);
+		wordBook.setUserid(userId);
 		
 		List<WordBook> wordBookList = new ArrayList<WordBook>();
 		
@@ -214,13 +218,13 @@ public class WordBookController {
 		return new ResponseEntity<String>(MyJsonUtil.toString(wordBookList, "wordbooks"), responseHeaders, HttpStatus.CREATED);
     }
 
-	@RequestMapping(value="/updateWordBookList.do")
+	@RequestMapping(value="/updateWordBook.do")
     public @ResponseBody String updateWordBookList(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		int id = ServletRequestUtils.getIntParameter(request, "id", 0);
 		String name = ServletRequestUtils.getStringParameter(request, "name", "");
 		String author = ServletRequestUtils.getStringParameter(request, "author", "");
 		int userid = ServletRequestUtils.getIntParameter(request, "userid", 0);
-		String isFavorite = ServletRequestUtils.getStringParameter(request, "isFavorite", "");
+		String isFavorite = ServletRequestUtils.getStringParameter(request, "isfavorite", "");
 		
 		WordBook wb = new WordBook(name);
 		wb.setId(id);
