@@ -98,5 +98,14 @@
             <version>2.4</version>
         </dependency>
 
+		<dependency>
+		    <groupId>IEDU_Flashcard_core</groupId>
+		    <artifactId>IEDU_Flashcard_core</artifactId>
+		    <version>1.0.0</version>
+		    <scope>system</scope>
+		    <systemPath>${project.basedir}/WebContent/WEB-INF/lib/iedu_flashcard_core.jar</systemPath>
+		</dependency>
+
+
 	</dependencies>
 </project>
