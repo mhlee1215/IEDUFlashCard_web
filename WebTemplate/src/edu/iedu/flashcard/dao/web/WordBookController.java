@@ -1,5 +1,6 @@
 package edu.iedu.flashcard.dao.web;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.sql.*;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,8 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-
-
+import edu.iedu.flashcard.dao.domain.QuizletCatalog;
 import edu.iedu.flashcard.dao.domain.User;
 import edu.iedu.flashcard.dao.domain.Word;
 import edu.iedu.flashcard.dao.domain.WordBook;
@@ -32,6 +34,7 @@ import edu.iedu.flashcard.dao.service.UserService;
 import edu.iedu.flashcard.dao.service.WordBookService;
 import edu.iedu.flashcard.dao.service.WordService;
 import edu.iedu.flashcard.dao.util.MyJsonUtil;
+import edu.iedu.flashcard.dao.util.JsonReader;
 
 
 
@@ -51,7 +54,7 @@ public class WordBookController {
 	@Autowired
 	private final WordBookService wordBookService = null;
 
-
+	private final String clientId = "MbR64YFWKb";
 	
 	
 
@@ -106,26 +109,25 @@ public class WordBookController {
     }
 	
 	
-	@RequestMapping(value="/importWordBook.do")
-    public @ResponseBody String importWordBook(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-		int id = ServletRequestUtils.getIntParameter(request, "id", 0);
-		int userid = ServletRequestUtils.getIntParameter(request, "userid", 0);
-		
-		WordBook wb = new WordBook();
-		wb.setId(id);
-		WordBook samewb = new WordBook();
-		
-		try {
-			samewb = wordBookService.readWordBook(wb);
-			samewb.setUserid(userid);
-			samewb.setId(wordBookService.getNextID());
-			wordBookService.createWordBook(samewb);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "success";
-    }
+//	@RequestMapping(value="/importWordBook.do")
+//    public @ResponseBody String importWordBook(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+//		int setId = ServletRequestUtils.getIntParameter(request, "id", 0);
+//		
+//		WordBook wb = new WordBook();
+//		wb.setId(id);
+//		WordBook samewb = new WordBook();
+//		
+//		try {
+//			samewb = wordBookService.readWordBook(wb);
+//			samewb.setUserid(userid);
+//			samewb.setId(wordBookService.getNextID());
+//			wordBookService.createWordBook(samewb);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return "success";
+//    }
 
 	@RequestMapping(value="/deleteWordBookAndWords.do")
     public @ResponseBody String deleteWordBookAndWords(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
@@ -142,6 +144,77 @@ public class WordBookController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return "success";
+    }
+	
+	@RequestMapping(value="/importQuizlet.do")
+    public @ResponseBody String importQuizlet(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		String setId = ServletRequestUtils.getStringParameter(request, "setId", "215");
+		
+		JsonReader x = null;
+		JSONObject jsonSet = null;
+		String title = "";
+		int term_count = 0;
+		String[] words;
+		String[] definitions;
+		
+		try {
+			jsonSet = x.readJsonFromUrl("https://api.quizlet.com/2.0/sets/"+setId+"?client_id="+clientId+"&whitespace=1");
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			title = (String)jsonSet.get("title");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	
+		try {
+			term_count = jsonSet.getJSONArray("terms").length();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		words = new String[term_count];
+		definitions = new String[term_count];
+		
+		for(int i = 0 ; i < term_count ; i++){
+    		try {
+				words[i] = (String)jsonSet.getJSONArray("terms").getJSONObject(i).get("term");
+				definitions[i] = (String)jsonSet.getJSONArray("terms").getJSONObject(i).get("definition");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}	
+	    }
+		
+		WordBook wordbook = new WordBook(title);
+		wordbook.setUserid(10);
+		int wordbookId = -1;
+		try {
+			wordbookId = wordBookService.createWordBook(wordbook);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(int i = 0; i < term_count ; i++){
+			Word dummyWord = new Word(words[i], definitions[i]);
+			
+			if(wordbookId == -1){
+				return "wordbook creation failed";
+			}
+			
+			dummyWord.setWordbookid(wordbookId);
+			try {
+				wordService.createWord(dummyWord);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 		return "success";
     }
 	

@@ -176,7 +176,7 @@ public class WordController {
 
 	@RequestMapping(value="/readWordDataList.do")
 	public @ResponseBody String readWordData(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-
+		
 		//get parameters
 		String name = ServletRequestUtils.getStringParameter(request, "word", "");
 		String meaning = ServletRequestUtils.getStringParameter(request, "meaning", "");
