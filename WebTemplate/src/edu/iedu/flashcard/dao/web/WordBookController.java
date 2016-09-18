@@ -149,7 +149,7 @@ public class WordBookController {
 	
 	@RequestMapping(value="/importQuizlet.do")
     public @ResponseBody String importQuizlet(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-		String setId = ServletRequestUtils.getStringParameter(request, "setId", "215");
+		String setId = ServletRequestUtils.getStringParameter(request, "setId", "415");
 		
 		JsonReader x = null;
 		JSONObject jsonSet = null;
@@ -191,7 +191,7 @@ public class WordBookController {
 	    }
 		
 		WordBook wordbook = new WordBook(title);
-		wordbook.setUserid(10);
+		wordbook.setUserid(39);
 		int wordbookId = -1;
 		try {
 			wordbookId = wordBookService.createWordBook(wordbook);
