@@ -191,7 +191,7 @@ public class WordBookController {
 	    }
 		
 		WordBook wordbook = new WordBook(title);
-		wordbook.setUserid(40);
+		wordbook.setUserid(41);
 		int wordbookId = -1;
 		try {
 			wordbookId = wordBookService.createWordBook(wordbook);
