@@ -109,25 +109,33 @@ public class WordBookController {
     }
 	
 	
-//	@RequestMapping(value="/importWordBook.do")
-//    public @ResponseBody String importWordBook(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-//		int setId = ServletRequestUtils.getIntParameter(request, "id", 0);
-//		
-//		WordBook wb = new WordBook();
-//		wb.setId(id);
-//		WordBook samewb = new WordBook();
-//		
-//		try {
-//			samewb = wordBookService.readWordBook(wb);
-//			samewb.setUserid(userid);
-//			samewb.setId(wordBookService.getNextID());
-//			wordBookService.createWordBook(samewb);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return "success";
-//    }
+	@RequestMapping(value="/importWordBook.do")
+    public @ResponseBody String importWordBook(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		int fromWordbookId = ServletRequestUtils.getIntParameter(request, "fromWordbookId", 0);
+		int toUserId = ServletRequestUtils.getIntParameter(request, "toUserId", 0);
+		
+		WordBook wb = new WordBook();
+		wb.setId(fromWordbookId);
+
+		try {
+			WordBook samewb = wordBookService.readWordBook(wb);
+			samewb.setUserid(toUserId);
+			samewb.setId(wordBookService.getNextID());
+			wordBookService.createWordBook(samewb);
+			
+			Word pWord = new Word();
+			pWord.setWordbookid(fromWordbookId);
+			List<Word> wordList = wordService.readWordList(pWord);
+			for(Word w : wordList){
+				w.setWordbookid(samewb.getId());
+				wordService.createWord(w);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "success";
+    }
 
 	@RequestMapping(value="/deleteWordBookAndWords.do")
     public @ResponseBody String deleteWordBookAndWords(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {

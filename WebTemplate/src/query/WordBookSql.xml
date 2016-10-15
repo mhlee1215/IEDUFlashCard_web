@@ -35,7 +35,7 @@
  	</select>
  	
 	<select id="readWordBook" resultMap="WordBook">
-       SELECT ID, NAME, AUTHOR, USERID, ISFAVORITE
+       SELECT ID, NAME, AUTHOR, USERID, ISFAVORITE, '0' as SIZE
  		FROM wordbook
  		WHERE 
  			ID = ID
