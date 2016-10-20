@@ -137,6 +137,31 @@ public class WordBookController {
 		return "success";
     }
 
+	@RequestMapping(value="/createWordBook.do")
+    public @ResponseBody String createWordBookAndWords(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		int userId = ServletRequestUtils.getIntParameter(request, "userid", 0);
+		String wordbookName = ServletRequestUtils.getStringParameter(request, "name", "");
+		String isfavorite = ServletRequestUtils.getStringParameter(request, "isfavorite", "");
+		
+		wordbookName = URLDecoder.decode(wordbookName, "UTF-8");
+		isfavorite = URLDecoder.decode(isfavorite, "UTF-8");
+		
+		if(userId == 0 || wordbookName.isEmpty())
+			return "fail_invalid_parameters";
+		
+		WordBook wb = new WordBook();
+		wb.setId(wordBookService.getNextID());
+		wb.setName(wordbookName);
+		wb.setUserid(userId);
+		wb.setIsfavorite(isfavorite);
+		try {
+			wordBookService.createWordBook(wb);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "success";
+    }
+	
 	@RequestMapping(value="/deleteWordBookAndWords.do")
     public @ResponseBody String deleteWordBookAndWords(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		int id = ServletRequestUtils.getIntParameter(request, "id", 0);
@@ -233,6 +258,9 @@ public class WordBookController {
 		int userid = ServletRequestUtils.getIntParameter(request, "userid", 0);
 		String isfavorite = ServletRequestUtils.getStringParameter(request, "isfavorite", "N");
 		
+		name = URLDecoder.decode(name, "UTF-8");
+		author = URLDecoder.decode(author, "UTF-8");
+		
 		WordBook wb = new WordBook(name);
 		wb.setAuthor(author);
 		wb.setUserid(userid);
@@ -256,6 +284,8 @@ public class WordBookController {
     public ResponseEntity<String> readWordBook(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {	
 		int id = ServletRequestUtils.getIntParameter(request, "id", 0);
 		String name = ServletRequestUtils.getStringParameter(request, "word", "");
+		
+		name = URLDecoder.decode(name, "UTF-8");
 					
 		WordBook book = new WordBook(name);
 		book.setId(id);
@@ -279,7 +309,9 @@ public class WordBookController {
 		int id = ServletRequestUtils.getIntParameter(request, "id", -1);
 		String name = ServletRequestUtils.getStringParameter(request, "name", "");
 		int userId = ServletRequestUtils.getIntParameter(request, "userId", -1);
-					
+		
+		name = URLDecoder.decode(name, "UTF-8");
+		
 		WordBook wordBook = new WordBook(name);
 		wordBook.setId(id);
 		wordBook.setName(name);
@@ -306,6 +338,10 @@ public class WordBookController {
 		String author = ServletRequestUtils.getStringParameter(request, "author", "");
 		int userid = ServletRequestUtils.getIntParameter(request, "userid", 0);
 		String isFavorite = ServletRequestUtils.getStringParameter(request, "isfavorite", "");
+		
+		name = URLDecoder.decode(name, "UTF-8");
+		author = URLDecoder.decode(author, "UTF-8");
+		isFavorite = URLDecoder.decode(isFavorite, "UTF-8");
 		
 		WordBook wb = new WordBook(name);
 		wb.setId(id);

@@ -106,14 +106,22 @@ public class WordController {
 	@RequestMapping(value="/addWord.do")
 	public @ResponseBody String addWord(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 
-		int wordBookId = ServletRequestUtils.getIntParameter(request, "wordBookId", -1);
-		String name = ServletRequestUtils.getStringParameter(request, "word", "");
+		int wordBookId = ServletRequestUtils.getIntParameter(request, "wordbookid", -1);
+		String name = ServletRequestUtils.getStringParameter(request, "name", "");
 		String meaning = ServletRequestUtils.getStringParameter(request, "meaning", "");
+		String isfavorite = ServletRequestUtils.getStringParameter(request, "isfavorite", "");
 
+		name = URLDecoder.decode(name, "UTF-8");
+		meaning = URLDecoder.decode(meaning, "UTF-8");
+		
+		if(wordBookId == -1 || name.isEmpty() || meaning.isEmpty())
+			return "fail_invalid_parameters";
+		
 		System.out.println(wordBookId+", "+name+", "+meaning);
 
 		Word temp = new Word(name, meaning);
 		temp.setWordbookid(wordBookId);
+		temp.setIsfavorite(isfavorite);
 
 		System.out.println(temp);
 
@@ -125,7 +133,7 @@ public class WordController {
 		}
 
 
-		return temp.toString();
+		return "success";
 	}
 
 	@RequestMapping(value="/deleteWord.do")
@@ -136,6 +144,9 @@ public class WordController {
 		String name = ServletRequestUtils.getStringParameter(request, "name", "");
 		String meaning = ServletRequestUtils.getStringParameter(request, "meaning", "");
 
+		name = URLDecoder.decode(name, "UTF-8");
+		meaning = URLDecoder.decode(meaning, "UTF-8");
+		
 		Word temp = new Word(name, meaning);
 		temp.setId(id);
 		temp.setWordbookid(wordBookId);
@@ -159,6 +170,9 @@ public class WordController {
 		String meaning = ServletRequestUtils.getStringParameter(request, "meaning", "");
 		String isFavorite = ServletRequestUtils.getStringParameter(request, "isFavorite", "");
 
+		name = URLDecoder.decode(name, "UTF-8");
+		meaning = URLDecoder.decode(meaning, "UTF-8");
+		
 		Word temp = new Word(name, meaning);
 		temp.setId(id);
 		temp.setWordbookid(wordBookId);
@@ -180,6 +194,9 @@ public class WordController {
 		//get parameters
 		String name = ServletRequestUtils.getStringParameter(request, "word", "");
 		String meaning = ServletRequestUtils.getStringParameter(request, "meaning", "");
+		
+		name = URLDecoder.decode(name, "UTF-8");
+		meaning = URLDecoder.decode(meaning, "UTF-8");
 
 		Word temp = new Word(name, meaning);
 		List<Word> word = null;
