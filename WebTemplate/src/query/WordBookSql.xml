@@ -13,10 +13,19 @@
 		<result column="ISFAVORITE" property="isfavorite" />
  	</resultMap>
  	
- 	
  	<select id="readWordBookList" resultMap="WordBook">
- 		SELECT a.ID, a.NAME, AUTHOR, USERID, count(a.ID) SIZE, a.ISFAVORITE
- 		FROM wordbook a inner join word b on a.id = b.wordbookid 
+ 		SELECT
+	        a.ID,
+	        a.NAME,
+	        AUTHOR,
+	        USERID,
+	        IF(b.wdSize IS NULL,0,b.wdSize) SIZE,
+	        a.ISFAVORITE    
+	    FROM
+	        iedu_flashcard.wordbook a 
+	    left outer join
+	        (select wordbookid, count(id) wdSize from iedu_flashcard.word group by wordbookid) b
+		on a.id = b.wordbookid     
  		WHERE 
  			a.ID = a.ID
  		<isGreaterThan prepend="AND" property="id" compareValue="0">
